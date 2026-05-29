@@ -1,5 +1,5 @@
 {
-  "name": "CyberAI Playground",
+  "name": "Ren ai",
   "description": "Custom AI Multi-Provider Assistant Platform with cyberpunk styling, system personas, and advanced memory controls.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]

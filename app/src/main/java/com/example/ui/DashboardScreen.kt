@@ -116,9 +116,9 @@ fun DashboardScreen(
                             )
                             Spacer(modifier = Modifier.width(8.dp))
                             Text(
-                                "NEURAL CORE v1.4",
+                                "Ren ai",
                                 color = CyberTextHigh,
-                                fontFamily = FontFamily.Monospace,
+                                fontFamily = FontFamily.SansSerif,
                                 fontWeight = FontWeight.Bold,
                                 fontSize = 14.sp,
                                 letterSpacing = 2.sp
@@ -133,7 +133,7 @@ fun DashboardScreen(
                             Icon(
                                 imageVector = Icons.Default.Menu,
                                 contentDescription = "Open Historical Console Drawers",
-                                tint = CyberNeonRed
+                                tint = CyberTextHigh
                             )
                         }
                     },
@@ -143,15 +143,15 @@ fun DashboardScreen(
                         Box(
                             modifier = Modifier
                                 .padding(end = 8.dp)
-                                .background(CyberTerminalGray, RoundedCornerShape(12.dp))
-                                .border(BorderStroke(1.dp, Color(0x33DC2626)), RoundedCornerShape(12.dp))
+                                .background(CyberTerminalGray, RoundedCornerShape(24.dp))
+                                .border(BorderStroke(1.dp, Color(0x33DC2626)), RoundedCornerShape(24.dp))
                                 .padding(horizontal = 8.dp, vertical = 4.dp)
                         ) {
                             Row(verticalAlignment = Alignment.CenterVertically) {
                                 Text(
                                     text = "$activeProvider:",
                                     color = CyberTextDim,
-                                    fontFamily = FontFamily.Monospace,
+                                    
                                     fontSize = 9.sp,
                                     fontWeight = FontWeight.Bold
                                 )
@@ -159,7 +159,7 @@ fun DashboardScreen(
                                 Text(
                                     text = activeModel,
                                     color = CyberTextHigh,
-                                    fontFamily = FontFamily.Monospace,
+                                    
                                     fontSize = 9.sp,
                                     fontWeight = FontWeight.Bold
                                 )
@@ -300,7 +300,7 @@ fun CyberTabItem(
         Text(
             text = label,
             color = if (isActive) CyberTextHigh else CyberTextDim,
-            fontFamily = FontFamily.Monospace,
+            
             fontWeight = if (isActive) FontWeight.Bold else FontWeight.Normal,
             fontSize = 11.sp,
             letterSpacing = 1.sp
@@ -339,9 +339,9 @@ fun DrawerConsoleContent(
             modifier = Modifier.fillMaxWidth()
         ) {
             Text(
-                "SYSTEM CONSOLES",
+                "REN AI WORKSPACES",
                 color = CyberNeonRed,
-                fontFamily = FontFamily.Monospace,
+                fontFamily = FontFamily.SansSerif,
                 fontWeight = FontWeight.Bold,
                 fontSize = 14.sp,
                 letterSpacing = 1.sp
@@ -362,7 +362,7 @@ fun DrawerConsoleContent(
             onClick = { showCreateDialog = true },
             colors = ButtonDefaults.buttonColors(containerColor = CyberDarkCrimson),
             border = BorderStroke(1.dp, CyberNeonRed),
-            shape = RoundedCornerShape(4.dp),
+            shape = RoundedCornerShape(24.dp),
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = 16.dp)
@@ -373,7 +373,7 @@ fun DrawerConsoleContent(
             Text(
                 "INITIALIZE NEW CORE",
                 color = CyberTextHigh,
-                fontFamily = FontFamily.Monospace,
+                
                 fontWeight = FontWeight.Bold,
                 fontSize = 11.sp,
                 letterSpacing = 1.sp
@@ -383,7 +383,7 @@ fun DrawerConsoleContent(
         Text(
             "CHANNELS HISTORY [ROOM]",
             color = CyberTextDim,
-            fontFamily = FontFamily.Monospace,
+            
             fontSize = 10.sp,
             fontWeight = FontWeight.Bold,
             modifier = Modifier.padding(bottom = 8.dp)
@@ -399,7 +399,7 @@ fun DrawerConsoleContent(
                 Text(
                     "NO CHANNELS ONLINE\n\nTap above to mount an AI Core.",
                     color = CyberTextDim,
-                    fontFamily = FontFamily.Monospace,
+                    
                     fontSize = 12.sp,
                     textAlign = TextAlign.Center
                 )
@@ -416,12 +416,12 @@ fun DrawerConsoleContent(
                             .fillMaxWidth()
                             .background(
                                 if (isSelected) CyberDarkSurface else CyberDarkCard,
-                                RoundedCornerShape(4.dp)
+                                RoundedCornerShape(24.dp)
                             )
                             .border(
                                 1.dp,
                                 if (isSelected) CyberNeonRed else CyberDarkCrimson,
-                                RoundedCornerShape(4.dp)
+                                RoundedCornerShape(24.dp)
                             )
                             .clickable { onSessionSelected(session.id) }
                             .padding(10.dp)
@@ -435,7 +435,7 @@ fun DrawerConsoleContent(
                                 Text(
                                     session.title,
                                     color = CyberTextHigh,
-                                    fontFamily = FontFamily.Monospace,
+                                    
                                     fontWeight = FontWeight.Bold,
                                     fontSize = 12.sp,
                                     maxLines = 1,
@@ -445,7 +445,7 @@ fun DrawerConsoleContent(
                                 Text(
                                     "${session.provider.uppercase()} // ${session.modelName}",
                                     color = CyberTextDim,
-                                    fontFamily = FontFamily.Monospace,
+                                    
                                     fontSize = 9.sp,
                                     maxLines = 1,
                                     overflow = TextOverflow.Ellipsis
@@ -472,7 +472,7 @@ fun DrawerConsoleContent(
         Surface(
             color = CyberDarkCard,
             border = BorderStroke(1.dp, CyberDarkCrimson),
-            shape = RoundedCornerShape(2.dp),
+            shape = RoundedCornerShape(24.dp),
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 16.dp)
@@ -481,14 +481,14 @@ fun DrawerConsoleContent(
                 Text(
                     "DATABASE REGISTRY ONLINE",
                     color = CyberTextHigh,
-                    fontFamily = FontFamily.Monospace,
+                    
                     fontSize = 10.sp,
                     fontWeight = FontWeight.Bold
                 )
                 Text(
                     "Nodes synced: ${sessions.size} cores loaded.",
                     color = CyberTextDim,
-                    fontFamily = FontFamily.Monospace,
+                    
                     fontSize = 9.sp
                 )
             }
@@ -536,7 +536,7 @@ fun CreateCoreDialog(
             Text(
                 "MOUNT AI CORE MODULE",
                 color = CyberNeonRed,
-                fontFamily = FontFamily.Monospace,
+                
                 fontWeight = FontWeight.Bold,
                 fontSize = 16.sp
             )
@@ -544,7 +544,7 @@ fun CreateCoreDialog(
         containerColor = CyberDarkSurface,
         textContentColor = CyberTextHigh,
         modifier = Modifier
-            .border(1.dp, CyberNeonRed, RoundedCornerShape(28.dp))
+            .border(1.dp, CyberNeonRed, RoundedCornerShape(24.dp))
             .testTag("create_core_dialog"),
         text = {
             LazyColumn(
@@ -555,7 +555,7 @@ fun CreateCoreDialog(
                     Text(
                         "Configure runtime matrices for localized context routing.",
                         color = CyberTextDim,
-                        fontFamily = FontFamily.Monospace,
+                        
                         fontSize = 10.sp
                     )
                 }
@@ -565,7 +565,7 @@ fun CreateCoreDialog(
                     OutlinedTextField(
                         value = title,
                         onValueChange = { viewModel.configTitle.value = it },
-                        label = { Text("Core Channel Alias", fontFamily = FontFamily.Monospace) },
+                        label = { Text("Core Channel Alias", ) },
                         colors = OutlinedTextFieldDefaults.colors(
                             focusedBorderColor = CyberNeonRed,
                             unfocusedBorderColor = CyberDarkCrimson,
@@ -589,7 +589,7 @@ fun CreateCoreDialog(
                             value = provider.uppercase(),
                             onValueChange = {},
                             readOnly = true,
-                            label = { Text("Provider Node", fontFamily = FontFamily.Monospace) },
+                            label = { Text("Provider Node", ) },
                             colors = OutlinedTextFieldDefaults.colors(
                                 focusedBorderColor = CyberNeonRed,
                                 unfocusedBorderColor = CyberDarkCrimson,
@@ -613,7 +613,7 @@ fun CreateCoreDialog(
                         ) {
                             listOf("gemini", "groq", "openrouter", "custom").forEach { prov ->
                                 DropdownMenuItem(
-                                    text = { Text(prov.uppercase(), color = CyberTextHigh, fontFamily = FontFamily.Monospace) },
+                                    text = { Text(prov.uppercase(), color = CyberTextHigh, ) },
                                     onClick = {
                                         viewModel.configProvider.value = prov
                                         showProviderDropdown = false
@@ -630,7 +630,7 @@ fun CreateCoreDialog(
                         OutlinedTextField(
                             value = model,
                             onValueChange = { viewModel.configModel.value = it },
-                            label = { Text("Active Custom Model", fontFamily = FontFamily.Monospace) },
+                            label = { Text("Active Custom Model", ) },
                             colors = OutlinedTextFieldDefaults.colors(
                                 focusedBorderColor = CyberNeonRed,
                                 unfocusedBorderColor = CyberDarkCrimson,
@@ -657,7 +657,7 @@ fun CreateCoreDialog(
                                 value = model,
                                 onValueChange = {},
                                 readOnly = true,
-                                label = { Text("Active AI Model", fontFamily = FontFamily.Monospace) },
+                                label = { Text("Active AI Model", ) },
                                 colors = OutlinedTextFieldDefaults.colors(
                                     focusedBorderColor = CyberNeonRed,
                                     unfocusedBorderColor = CyberDarkCrimson,
@@ -681,7 +681,7 @@ fun CreateCoreDialog(
                             ) {
                                 availableModels.forEach { m ->
                                     DropdownMenuItem(
-                                        text = { Text(m, color = CyberTextHigh, fontFamily = FontFamily.Monospace, fontSize = 11.sp) },
+                                        text = { Text(m, color = CyberTextHigh,  fontSize = 11.sp) },
                                         onClick = {
                                             viewModel.configModel.value = m
                                             showModelDropdown = false
@@ -701,7 +701,7 @@ fun CreateCoreDialog(
                             value = activePersonaName,
                             onValueChange = {},
                             readOnly = true,
-                            label = { Text("System Persona Prompt", fontFamily = FontFamily.Monospace) },
+                            label = { Text("System Persona Prompt", ) },
                             colors = OutlinedTextFieldDefaults.colors(
                                 focusedBorderColor = CyberNeonRed,
                                 unfocusedBorderColor = CyberDarkCrimson,
@@ -729,7 +729,7 @@ fun CreateCoreDialog(
                                         Text(
                                             "${p.name} ${if (p.isTemplate) "★" else ""}",
                                             color = CyberTextHigh,
-                                            fontFamily = FontFamily.Monospace,
+                                            
                                             fontSize = 11.sp
                                         )
                                     },
@@ -748,7 +748,7 @@ fun CreateCoreDialog(
                     Text(
                         "MEMORY CONTEXT SELECTOR",
                         color = CyberNeonRed,
-                        fontFamily = FontFamily.Monospace,
+                        
                         fontWeight = FontWeight.Bold,
                         fontSize = 10.sp,
                         modifier = Modifier.padding(top = 4.dp)
@@ -763,13 +763,13 @@ fun CreateCoreDialog(
                                 containerColor = if (memoryType == "fixed_window") CyberDarkCrimson else CyberDarkCard
                             ),
                             border = BorderStroke(1.dp, if (memoryType == "fixed_window") CyberNeonRed else CyberDarkCrimson),
-                            shape = RoundedCornerShape(4.dp),
+                            shape = RoundedCornerShape(24.dp),
                             modifier = Modifier.weight(1f)
                         ) {
                             Text(
                                 "FIXED N WINDOW",
                                 color = CyberTextHigh,
-                                fontFamily = FontFamily.Monospace,
+                                
                                 fontSize = 9.sp,
                                 textAlign = TextAlign.Center
                             )
@@ -781,13 +781,13 @@ fun CreateCoreDialog(
                                 containerColor = if (memoryType == "infinite") CyberDarkCrimson else CyberDarkCard
                             ),
                             border = BorderStroke(1.dp, if (memoryType == "infinite") CyberNeonRed else CyberDarkCrimson),
-                            shape = RoundedCornerShape(4.dp),
+                            shape = RoundedCornerShape(24.dp),
                             modifier = Modifier.weight(1f)
                         ) {
                             Text(
                                 "INFINITE SUMMARY",
                                 color = CyberTextHigh,
-                                fontFamily = FontFamily.Monospace,
+                                
                                 fontSize = 9.sp,
                                 textAlign = TextAlign.Center
                             )
@@ -806,13 +806,13 @@ fun CreateCoreDialog(
                                 Text(
                                     "Fixed Window Buffer (N messages)",
                                     color = CyberTextDim,
-                                    fontFamily = FontFamily.Monospace,
+                                    
                                     fontSize = 10.sp
                                 )
                                 Text(
                                     "$fixedLimit Msgs",
                                     color = CyberNeonRed,
-                                    fontFamily = FontFamily.Monospace,
+                                    
                                     fontSize = 10.sp,
                                     fontWeight = FontWeight.Bold
                                 )
@@ -842,13 +842,13 @@ fun CreateCoreDialog(
                             Text(
                                 "Max Completion Tokens",
                                 color = CyberTextDim,
-                                fontFamily = FontFamily.Monospace,
+                                
                                 fontSize = 10.sp
                             )
                             Text(
                                 "$maxTokens Tokens",
                                 color = CyberNeonRed,
-                                fontFamily = FontFamily.Monospace,
+                                
                                 fontSize = 10.sp,
                                 fontWeight = FontWeight.Bold
                             )
@@ -877,13 +877,13 @@ fun CreateCoreDialog(
                             Text(
                                 "Inference Temperature",
                                 color = CyberTextDim,
-                                fontFamily = FontFamily.Monospace,
+                                
                                 fontSize = 10.sp
                             )
                             Text(
                                 String.format("%.2f", temp),
                                 color = CyberNeonRed,
-                                fontFamily = FontFamily.Monospace,
+                                
                                 fontSize = 10.sp,
                                 fontWeight = FontWeight.Bold
                             )
@@ -907,13 +907,13 @@ fun CreateCoreDialog(
             Button(
                 onClick = onConfirm,
                 colors = ButtonDefaults.buttonColors(containerColor = CyberNeonRed),
-                shape = RoundedCornerShape(4.dp),
+                shape = RoundedCornerShape(24.dp),
                 modifier = Modifier.testTag("confirm_mount_core_btn")
             ) {
                 Text(
                     "COMPILE & MOUNT",
                     color = CyberTextHigh,
-                    fontFamily = FontFamily.Monospace,
+                    
                     fontWeight = FontWeight.Bold,
                     fontSize = 11.sp
                 )
@@ -924,7 +924,7 @@ fun CreateCoreDialog(
                 Text(
                     "ABORT",
                     color = CyberTextDim,
-                    fontFamily = FontFamily.Monospace,
+                    
                     fontSize = 11.sp
                 )
             }
@@ -950,11 +950,10 @@ fun PlaygroundTab(
     // Scroll automatically whenever messages list changes or streaming output updates
     LaunchedEffect(messages.size, liveStreamContent) {
         if (messages.isNotEmpty() || liveStreamContent.isNotEmpty()) {
-            coroutineScope.launch {
-                val lastIndex = if (liveStreamContent.isNotEmpty()) messages.size else messages.size - 1
-                if (lastIndex >= 0) {
-                    scrollState.animateScrollToItem(lastIndex)
-                }
+            val lastIndex = if (liveStreamContent.isNotEmpty()) messages.size else messages.size - 1
+            if (lastIndex >= 0) {
+                // Using scrollToItem instead of animateScrollToItem prevents heavy UI jank when new tokens rapidly emit
+                scrollState.scrollToItem(lastIndex)
             }
         }
     }
@@ -985,7 +984,7 @@ fun PlaygroundTab(
                     Text(
                         "CORE TERMINAL OFFLINE",
                         color = CyberNeonRed,
-                        fontFamily = FontFamily.Monospace,
+                        
                         fontWeight = FontWeight.Bold,
                         fontSize = 16.sp,
                         letterSpacing = 1.sp
@@ -994,7 +993,7 @@ fun PlaygroundTab(
                     Text(
                         "Swipe open the left drawer or press the menu button to compile and mount an active AI processing node. Be sure to paste your API credentials in the CONNECT panel.",
                         color = CyberTextDim,
-                        fontFamily = FontFamily.Monospace,
+                        
                         fontSize = 11.sp,
                         textAlign = TextAlign.Center,
                         lineHeight = 16.sp
@@ -1028,7 +1027,7 @@ fun PlaygroundTab(
                             Text(
                                 text = "ACTIVE CORE: ${activeSession.title.uppercase()}",
                                 color = CyberTextHigh,
-                                fontFamily = FontFamily.Monospace,
+                                
                                 fontWeight = FontWeight.Bold,
                                 fontSize = 11.sp
                             )
@@ -1074,7 +1073,7 @@ fun PlaygroundTab(
                         Text(
                             text = memoryTypeLabel,
                             color = CyberTextDim,
-                            fontFamily = FontFamily.Monospace,
+                            
                             fontSize = 9.sp
                         )
                         Text(
@@ -1084,7 +1083,7 @@ fun PlaygroundTab(
                                 "4096 TOKENS CAP"
                             },
                             color = CyberNeonRed,
-                            fontFamily = FontFamily.Monospace,
+                            
                             fontSize = 9.sp,
                             fontWeight = FontWeight.Bold
                         )
@@ -1100,7 +1099,7 @@ fun PlaygroundTab(
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(6.dp)
-                            .clip(RoundedCornerShape(3.dp))
+                            .clip(RoundedCornerShape(24.dp))
                     )
 
                     Spacer(modifier = Modifier.height(10.dp))
@@ -1113,14 +1112,14 @@ fun PlaygroundTab(
                         Text(
                             text = "NODE RELAY: ${activeSession.provider.uppercase()} // ${activeSession.modelName}",
                             color = CyberTextDim,
-                            fontFamily = FontFamily.Monospace,
+                            
                             fontSize = 8.sp
                         )
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             Text(
                                 text = "API_SECURE • LATENCY: 42ms",
                                 color = CyberTerminalGreen,
-                                fontFamily = FontFamily.Monospace,
+                                
                                 fontSize = 8.sp,
                                 fontWeight = FontWeight.Bold
                             )
@@ -1149,7 +1148,7 @@ fun PlaygroundTab(
                                 Text(
                                     "LINK CONSOLE ESTABLISHED",
                                     color = CyberTerminalGreen,
-                                    fontFamily = FontFamily.Monospace,
+                                    
                                     fontSize = 11.sp,
                                     fontWeight = FontWeight.Bold
                                 )
@@ -1157,7 +1156,7 @@ fun PlaygroundTab(
                                 Text(
                                     "Waiting for telemetry string packet...",
                                     color = CyberTextDim,
-                                    fontFamily = FontFamily.Monospace,
+                                    
                                     fontSize = 9.sp
                                 )
                             }
@@ -1189,7 +1188,7 @@ fun PlaygroundTab(
                 Text(
                     ">> INCOMING AI TELEMETRY STRING BYTES...",
                     color = CyberTerminalGreen,
-                    fontFamily = FontFamily.Monospace,
+                    
                     fontSize = 8.sp,
                     modifier = Modifier.padding(bottom = 6.dp)
                 )
@@ -1220,7 +1219,7 @@ fun PlaygroundTab(
                             Text(
                                 "Query Neural Core...",
                                 color = CyberTextDim,
-                                fontFamily = FontFamily.Monospace,
+                                
                                 fontSize = 11.sp
                             )
                         },
@@ -1233,7 +1232,7 @@ fun PlaygroundTab(
                             unfocusedContainerColor = Color.Transparent
                         ),
                         textStyle = androidx.compose.ui.text.TextStyle(
-                            fontFamily = FontFamily.Monospace,
+                            
                             fontSize = 12.sp
                         ),
                         keyboardOptions = KeyboardOptions(
@@ -1252,7 +1251,7 @@ fun PlaygroundTab(
                 Box(
                     modifier = Modifier
                         .size(48.dp)
-                        .clip(RoundedCornerShape(16.dp))
+                        .clip(RoundedCornerShape(24.dp))
                         .background(
                             if (userPromptText.isNotBlank() && !isGenerating) CyberNeonRed else CyberTerminalGray
                         )
@@ -1280,8 +1279,8 @@ fun PlaygroundTab(
 fun ConsoleChatMessageCard(msg: MessageEntity) {
     val isUser = msg.role.lowercase() == "user"
     val alignArrangement = if (isUser) Arrangement.End else Arrangement.Start
-    val bgColor = if (isUser) CyberDarkCard else CyberDarkSurface
-    val borderColor = if (isUser) Color(0x33DC2626) else CyberTerminalGray
+    val bgColor = if (isUser) CyberNeonRed else CyberDarkSurface
+    val textColor = if (isUser) Color.White else CyberTextHigh
 
     Row(
         horizontalArrangement = alignArrangement,
@@ -1291,7 +1290,6 @@ fun ConsoleChatMessageCard(msg: MessageEntity) {
             .padding(vertical = 4.dp)
     ) {
         if (!isUser) {
-            // Intelligent Bot Avatar
             Box(
                 modifier = Modifier
                     .size(32.dp)
@@ -1301,7 +1299,7 @@ fun ConsoleChatMessageCard(msg: MessageEntity) {
             ) {
                 Icon(
                     imageVector = Icons.Default.Face,
-                    contentDescription = "Core AI Smart Toy Avatar",
+                    contentDescription = "AI Avatar",
                     tint = Color.White,
                     modifier = Modifier.size(16.dp)
                 )
@@ -1312,54 +1310,15 @@ fun ConsoleChatMessageCard(msg: MessageEntity) {
         Box(
             modifier = Modifier
                 .widthIn(max = 280.dp)
-                .background(bgColor, RoundedCornerShape(16.dp))
-                .border(1.dp, borderColor, RoundedCornerShape(16.dp))
-                .padding(12.dp)
+                .background(bgColor, RoundedCornerShape(24.dp))
+                .padding(16.dp)
         ) {
-            Column {
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Box(
-                        modifier = Modifier
-                            .size(6.dp)
-                            .background(if (isUser) CyberNeonRed else CyberTerminalGreen, RoundedCornerShape(50))
-                    )
-                    Spacer(modifier = Modifier.width(6.dp))
-                    Text(
-                        if (isUser) "UPLINK_USER:" else "NEURAL CORE:",
-                        color = if (isUser) CyberNeonRed else CyberTerminalGreen,
-                        fontFamily = FontFamily.Monospace,
-                        fontSize = 9.sp,
-                        fontWeight = FontWeight.Bold
-                    )
-                }
-                Spacer(modifier = Modifier.height(4.dp))
-                Text(
-                    text = msg.content,
-                    color = CyberTextHigh,
-                    fontFamily = FontFamily.Monospace,
-                    fontSize = 11.sp,
-                    lineHeight = 16.sp
-                )
-            }
-        }
-
-        if (isUser) {
-            Spacer(modifier = Modifier.width(8.dp))
-            // User Avatar
-            Box(
-                modifier = Modifier
-                    .size(32.dp)
-                    .clip(RoundedCornerShape(50))
-                    .background(CyberTerminalGray),
-                contentAlignment = Alignment.Center
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Person,
-                    contentDescription = "User Avatar",
-                    tint = CyberTextHigh,
-                    modifier = Modifier.size(16.dp)
-                )
-            }
+            Text(
+                text = msg.content,
+                color = textColor,
+                fontSize = 14.sp,
+                lineHeight = 20.sp
+            )
         }
     }
 }
@@ -1373,7 +1332,6 @@ fun ConsoleStreamingOutputCard(content: String) {
             .fillMaxWidth()
             .padding(vertical = 4.dp)
     ) {
-        // Intelligent Bot Avatar
         Box(
             modifier = Modifier
                 .size(32.dp)
@@ -1383,7 +1341,7 @@ fun ConsoleStreamingOutputCard(content: String) {
         ) {
             Icon(
                 imageVector = Icons.Default.Face,
-                contentDescription = "Core AI Smart Toy Avatar",
+                contentDescription = "AI Avatar",
                 tint = Color.White,
                 modifier = Modifier.size(16.dp)
             )
@@ -1393,35 +1351,15 @@ fun ConsoleStreamingOutputCard(content: String) {
         Box(
             modifier = Modifier
                 .widthIn(max = 280.dp)
-                .background(CyberDarkSurface, RoundedCornerShape(16.dp))
-                .border(1.dp, Color(0x33DC2626), RoundedCornerShape(16.dp))
-                .padding(12.dp)
+                .background(CyberDarkSurface, RoundedCornerShape(24.dp))
+                .padding(16.dp)
         ) {
-            Column {
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Box(
-                        modifier = Modifier
-                            .size(6.dp)
-                            .background(CyberNeonRed, RoundedCornerShape(50))
-                    )
-                    Spacer(modifier = Modifier.width(6.dp))
-                    Text(
-                        "NEURAL CORE STREAMING...",
-                        color = CyberNeonRed,
-                        fontFamily = FontFamily.Monospace,
-                        fontSize = 9.sp,
-                        fontWeight = FontWeight.Bold
-                    )
-                }
-                Spacer(modifier = Modifier.height(4.dp))
-                Text(
-                    text = content + "█", // Cursor indicator
-                    color = CyberTextHigh,
-                    fontFamily = FontFamily.Monospace,
-                    fontSize = 11.sp,
-                    lineHeight = 16.sp
-                )
-            }
+            Text(
+                text = content + "█",
+                color = CyberTextHigh,
+                fontSize = 14.sp,
+                lineHeight = 20.sp
+            )
         }
     }
 }
@@ -1441,7 +1379,7 @@ fun PersonasTab(viewModel: MainViewModel, personas: List<PersonaEntity>) {
             Text(
                 "AI PERSONA DIRECTIVES MODULE",
                 color = CyberNeonRed,
-                fontFamily = FontFamily.Monospace,
+                
                 fontWeight = FontWeight.Bold,
                 fontSize = 14.sp,
                 letterSpacing = 1.sp
@@ -1450,7 +1388,7 @@ fun PersonasTab(viewModel: MainViewModel, personas: List<PersonaEntity>) {
             Text(
                 "Configure core prompts for systemic AI reasoning presets.",
                 color = CyberTextDim,
-                fontFamily = FontFamily.Monospace,
+                
                 fontSize = 10.sp
             )
         }
@@ -1467,7 +1405,7 @@ fun PersonasTab(viewModel: MainViewModel, personas: List<PersonaEntity>) {
                     Text(
                         "COMPILE NEW CUSTOM DIRECTIVE",
                         color = CyberTextHigh,
-                        fontFamily = FontFamily.Monospace,
+                        
                         fontWeight = FontWeight.Bold,
                         fontSize = 11.sp
                     )
@@ -1476,8 +1414,8 @@ fun PersonasTab(viewModel: MainViewModel, personas: List<PersonaEntity>) {
                     OutlinedTextField(
                         value = newName,
                         onValueChange = { viewModel.newPersonaName.value = it },
-                        label = { Text("Directive Profile Alias", fontFamily = FontFamily.Monospace) },
-                        shape = RoundedCornerShape(12.dp),
+                        label = { Text("Directive Profile Alias", ) },
+                        shape = RoundedCornerShape(24.dp),
                         colors = OutlinedTextFieldDefaults.colors(
                             focusedTextColor = CyberTextHigh,
                             unfocusedTextColor = CyberTextHigh,
@@ -1498,8 +1436,8 @@ fun PersonasTab(viewModel: MainViewModel, personas: List<PersonaEntity>) {
                     OutlinedTextField(
                         value = newInstructions,
                         onValueChange = { viewModel.newPersonaInstructions.value = it },
-                        label = { Text("System Context Instructions", fontFamily = FontFamily.Monospace) },
-                        shape = RoundedCornerShape(12.dp),
+                        label = { Text("System Context Instructions", ) },
+                        shape = RoundedCornerShape(24.dp),
                         colors = OutlinedTextFieldDefaults.colors(
                             focusedTextColor = CyberTextHigh,
                             unfocusedTextColor = CyberTextHigh,
@@ -1525,7 +1463,7 @@ fun PersonasTab(viewModel: MainViewModel, personas: List<PersonaEntity>) {
                             containerColor = CyberNeonRed,
                             disabledContainerColor = CyberTerminalGray
                         ),
-                        shape = RoundedCornerShape(12.dp),
+                        shape = RoundedCornerShape(24.dp),
                         modifier = Modifier
                             .fillMaxWidth()
                             .testTag("compile_persona_btn")
@@ -1533,7 +1471,7 @@ fun PersonasTab(viewModel: MainViewModel, personas: List<PersonaEntity>) {
                         Text(
                             "COMPILE DIRECTIVE",
                             color = CyberTextHigh,
-                            fontFamily = FontFamily.Monospace,
+                            
                             fontWeight = FontWeight.Bold,
                             fontSize = 11.sp
                         )
@@ -1547,7 +1485,7 @@ fun PersonasTab(viewModel: MainViewModel, personas: List<PersonaEntity>) {
             Text(
                 "SYNTAX DIRECTIVES DATABASE REGISTRY",
                 color = CyberNeonRed,
-                fontFamily = FontFamily.Monospace,
+                
                 fontWeight = FontWeight.Bold,
                 fontSize = 11.sp
             )
@@ -1577,7 +1515,7 @@ fun PersonasTab(viewModel: MainViewModel, personas: List<PersonaEntity>) {
                             Text(
                                 persona.name.uppercase(),
                                 color = CyberTextHigh,
-                                fontFamily = FontFamily.Monospace,
+                                
                                 fontWeight = FontWeight.Bold,
                                 fontSize = 12.sp
                             )
@@ -1599,7 +1537,7 @@ fun PersonasTab(viewModel: MainViewModel, personas: List<PersonaEntity>) {
                             Text(
                                 "[SYSTEM_CORE]",
                                 color = CyberTextDim,
-                                fontFamily = FontFamily.Monospace,
+                                
                                 fontSize = 9.sp
                             )
                         }
@@ -1610,7 +1548,7 @@ fun PersonasTab(viewModel: MainViewModel, personas: List<PersonaEntity>) {
                     Text(
                         persona.systemInstruction,
                         color = CyberTextDim,
-                        fontFamily = FontFamily.Monospace,
+                        
                         fontSize = 11.sp,
                         lineHeight = 16.sp
                     )
@@ -1640,7 +1578,7 @@ fun ConnectTab(viewModel: MainViewModel) {
             Text(
                 "CORE NETWORK ROUTER CREDENTIALS",
                 color = CyberNeonRed,
-                fontFamily = FontFamily.Monospace,
+                
                 fontWeight = FontWeight.Bold,
                 fontSize = 14.sp,
                 letterSpacing = 1.sp
@@ -1649,7 +1587,7 @@ fun ConnectTab(viewModel: MainViewModel) {
             Text(
                 "Integrate custom personal API keys. Credentials reside strictly inside local SQLite/SharedPreferences storage buffers, never touching unauthorized cloud telemetry nodes.",
                 color = CyberTextDim,
-                fontFamily = FontFamily.Monospace,
+                
                 fontSize = 10.sp,
                 lineHeight = 15.sp
             )
@@ -1672,7 +1610,7 @@ fun ConnectTab(viewModel: MainViewModel) {
                         Text(
                             "PROVIDER AUTHORIZATION PRESETS",
                             color = CyberTextHigh,
-                            fontFamily = FontFamily.Monospace,
+                            
                             fontWeight = FontWeight.Bold,
                             fontSize = 11.sp
                         )
@@ -1695,8 +1633,8 @@ fun ConnectTab(viewModel: MainViewModel) {
                     OutlinedTextField(
                         value = groqKey,
                         onValueChange = { viewModel.groqKeyInput.value = it },
-                        label = { Text("Groq API Key Matrix", fontFamily = FontFamily.Monospace) },
-                        shape = RoundedCornerShape(12.dp),
+                        label = { Text("Groq API Key Matrix", ) },
+                        shape = RoundedCornerShape(24.dp),
                         colors = OutlinedTextFieldDefaults.colors(
                             focusedTextColor = CyberTextHigh,
                             unfocusedTextColor = CyberTextHigh,
@@ -1719,8 +1657,8 @@ fun ConnectTab(viewModel: MainViewModel) {
                     OutlinedTextField(
                         value = openRouterKey,
                         onValueChange = { viewModel.openRouterKeyInput.value = it },
-                        label = { Text("OpenRouter Key Matrix", fontFamily = FontFamily.Monospace) },
-                        shape = RoundedCornerShape(12.dp),
+                        label = { Text("OpenRouter Key Matrix", ) },
+                        shape = RoundedCornerShape(24.dp),
                         colors = OutlinedTextFieldDefaults.colors(
                             focusedTextColor = CyberTextHigh,
                             unfocusedTextColor = CyberTextHigh,
@@ -1743,8 +1681,8 @@ fun ConnectTab(viewModel: MainViewModel) {
                     OutlinedTextField(
                         value = geminiKey,
                         onValueChange = { viewModel.geminiKeyInput.value = it },
-                        label = { Text("Gemini Custom Override Matrix", fontFamily = FontFamily.Monospace) },
-                        shape = RoundedCornerShape(12.dp),
+                        label = { Text("Gemini Custom Override Matrix", ) },
+                        shape = RoundedCornerShape(24.dp),
                         colors = OutlinedTextFieldDefaults.colors(
                             focusedTextColor = CyberTextHigh,
                             unfocusedTextColor = CyberTextHigh,
@@ -1767,8 +1705,8 @@ fun ConnectTab(viewModel: MainViewModel) {
                     OutlinedTextField(
                         value = customKey,
                         onValueChange = { viewModel.customKeyInput.value = it },
-                        label = { Text("Custom Provider API Key Matrix", fontFamily = FontFamily.Monospace) },
-                        shape = RoundedCornerShape(12.dp),
+                        label = { Text("Custom Provider API Key Matrix", ) },
+                        shape = RoundedCornerShape(24.dp),
                         colors = OutlinedTextFieldDefaults.colors(
                             focusedTextColor = CyberTextHigh,
                             unfocusedTextColor = CyberTextHigh,
@@ -1791,8 +1729,8 @@ fun ConnectTab(viewModel: MainViewModel) {
                     OutlinedTextField(
                         value = customUrl,
                         onValueChange = { viewModel.customUrlInput.value = it },
-                        label = { Text("Custom Provider Endpoint URL", fontFamily = FontFamily.Monospace) },
-                        shape = RoundedCornerShape(12.dp),
+                        label = { Text("Custom Provider Endpoint URL", ) },
+                        shape = RoundedCornerShape(24.dp),
                         colors = OutlinedTextFieldDefaults.colors(
                             focusedTextColor = CyberTextHigh,
                             unfocusedTextColor = CyberTextHigh,
@@ -1814,7 +1752,7 @@ fun ConnectTab(viewModel: MainViewModel) {
                     Button(
                         onClick = { viewModel.saveConfigKeys() },
                         colors = ButtonDefaults.buttonColors(containerColor = CyberNeonRed),
-                        shape = RoundedCornerShape(12.dp),
+                        shape = RoundedCornerShape(24.dp),
                         modifier = Modifier
                             .fillMaxWidth()
                             .testTag("save_keys_button")
@@ -1822,7 +1760,7 @@ fun ConnectTab(viewModel: MainViewModel) {
                         Text(
                             "COMMIT NETWORK KEYS",
                             color = CyberTextHigh,
-                            fontFamily = FontFamily.Monospace,
+                            
                             fontWeight = FontWeight.Bold,
                             fontSize = 11.sp
                         )
@@ -1840,7 +1778,7 @@ fun ConnectTab(viewModel: MainViewModel) {
                         Text(
                             "WIPE STORAGE KEY BUFFER",
                             color = CyberTextDim,
-                            fontFamily = FontFamily.Monospace,
+                            
                             fontSize = 10.sp,
                             fontWeight = FontWeight.Bold
                         )
@@ -1861,7 +1799,7 @@ fun ConnectTab(viewModel: MainViewModel) {
                     Text(
                         "UPLINK ROUTER SYSTEM REPORT",
                         color = CyberTerminalGreen,
-                        fontFamily = FontFamily.Monospace,
+                        
                         fontWeight = FontWeight.Bold,
                         fontSize = 11.sp
                     )
@@ -1869,25 +1807,25 @@ fun ConnectTab(viewModel: MainViewModel) {
                     Text(
                         "• Groq Key: ${if (groqKey.isNotEmpty()) "LINKED [GSK]" else "UNBOUNDED"}",
                         color = CyberTextDim,
-                        fontFamily = FontFamily.Monospace,
+                        
                         fontSize = 10.sp
                     )
                     Text(
                         "• OpenRouter Key: ${if (openRouterKey.isNotEmpty()) "LINKED [SK-OR]" else "UNBOUNDED"}",
                         color = CyberTextDim,
-                        fontFamily = FontFamily.Monospace,
+                        
                         fontSize = 10.sp
                     )
                     Text(
                         "• Gemini Module: ${if (geminiKey.isNotEmpty()) "OVERRIDE LINKED" else "SYSTEM KEY INTEGRATED"}",
                         color = CyberTextDim,
-                        fontFamily = FontFamily.Monospace,
+                        
                         fontSize = 10.sp
                     )
                     Text(
                         "• Custom Provider: Key: ${if (customKey.isNotEmpty()) "LINKED" else "VOID (OPTIONAL)"} // Endpoint: $customUrl",
                         color = CyberTextDim,
-                        fontFamily = FontFamily.Monospace,
+                        
                         fontSize = 10.sp
                     )
                 }
@@ -1974,7 +1912,7 @@ fun AnalysisTab(viewModel: MainViewModel) {
                 Text(
                     "CORE SYSTEM TELEMETRY & DECKS",
                     color = CyberNeonRed,
-                    fontFamily = FontFamily.Monospace,
+                    
                     fontWeight = FontWeight.Bold,
                     fontSize = 18.sp,
                     modifier = Modifier.testTag("analysis_title")
@@ -1982,7 +1920,7 @@ fun AnalysisTab(viewModel: MainViewModel) {
                 Text(
                     "OPERATIONAL DIAGNOSTIC CONSOLE // LOCAL FILE INTEGRATOR",
                     color = CyberTextDim,
-                    fontFamily = FontFamily.Monospace,
+                    
                     fontSize = 10.sp
                 )
                 Spacer(modifier = Modifier.height(8.dp))
@@ -2002,9 +1940,9 @@ fun AnalysisTab(viewModel: MainViewModel) {
                     border = BorderStroke(1.dp, Color(0x33DC2626))
                 ) {
                     Column(modifier = Modifier.padding(12.dp)) {
-                        Text("LATENCY (SUM)", color = CyberTextDim, fontSize = 9.sp, fontFamily = FontFamily.Monospace)
-                        Text("${latencyMs}ms", color = CyberNeonRed, fontSize = 18.sp, fontWeight = FontWeight.Bold, fontFamily = FontFamily.Monospace)
-                        Text("RTT PACKET", color = CyberTerminalGreen, fontSize = 8.sp, fontFamily = FontFamily.Monospace)
+                        Text("LATENCY (SUM)", color = CyberTextDim, fontSize = 9.sp, )
+                        Text("${latencyMs}ms", color = CyberNeonRed, fontSize = 18.sp, fontWeight = FontWeight.Bold, )
+                        Text("RTT PACKET", color = CyberTerminalGreen, fontSize = 8.sp, )
                     }
                 }
                 Card(
@@ -2013,9 +1951,9 @@ fun AnalysisTab(viewModel: MainViewModel) {
                     border = BorderStroke(1.dp, Color(0x33DC2626))
                 ) {
                     Column(modifier = Modifier.padding(12.dp)) {
-                        Text("TTFT METRIC", color = CyberTextDim, fontSize = 9.sp, fontFamily = FontFamily.Monospace)
-                        Text("${ttftMs}ms", color = CyberNeonRed, fontSize = 18.sp, fontWeight = FontWeight.Bold, fontFamily = FontFamily.Monospace)
-                        Text("FIRST BYTE STREAM", color = CyberTerminalGreen, fontSize = 8.sp, fontFamily = FontFamily.Monospace)
+                        Text("TTFT METRIC", color = CyberTextDim, fontSize = 9.sp, )
+                        Text("${ttftMs}ms", color = CyberNeonRed, fontSize = 18.sp, fontWeight = FontWeight.Bold, )
+                        Text("FIRST BYTE STREAM", color = CyberTerminalGreen, fontSize = 8.sp, )
                     }
                 }
                 Card(
@@ -2024,9 +1962,9 @@ fun AnalysisTab(viewModel: MainViewModel) {
                     border = BorderStroke(1.dp, Color(0x33DC2626))
                 ) {
                     Column(modifier = Modifier.padding(12.dp)) {
-                        Text("TOKEN SPEED", color = CyberTextDim, fontSize = 9.sp, fontFamily = FontFamily.Monospace)
-                        Text(String.format("%.1f", tokensPerSec), color = CyberNeonRed, fontSize = 18.sp, fontWeight = FontWeight.Bold, fontFamily = FontFamily.Monospace)
-                        Text("EST TOKENS/SEC", color = CyberTerminalGreen, fontSize = 8.sp, fontFamily = FontFamily.Monospace)
+                        Text("TOKEN SPEED", color = CyberTextDim, fontSize = 9.sp, )
+                        Text(String.format("%.1f", tokensPerSec), color = CyberNeonRed, fontSize = 18.sp, fontWeight = FontWeight.Bold, )
+                        Text("EST TOKENS/SEC", color = CyberTerminalGreen, fontSize = 8.sp, )
                     }
                 }
             }
@@ -2043,7 +1981,7 @@ fun AnalysisTab(viewModel: MainViewModel) {
                     Text(
                         "SYSTEM LATENCY TRANSACTION HISTORY",
                         color = CyberTextHigh,
-                        fontFamily = FontFamily.Monospace,
+                        
                         fontSize = 11.sp,
                         fontWeight = FontWeight.Bold
                     )
@@ -2156,9 +2094,9 @@ fun AnalysisTab(viewModel: MainViewModel) {
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
-                        Text("T-14 REQS", color = CyberTextDim, fontSize = 8.sp, fontFamily = FontFamily.Monospace)
-                        Text("DIAGNOSTICS PULSE RATIO: ACTIVE", color = CyberTerminalGreen, fontSize = 8.sp, fontFamily = FontFamily.Monospace)
-                        Text("LIVE", color = CyberNeonRed, fontSize = 8.sp, fontFamily = FontFamily.Monospace, fontWeight = FontWeight.Bold)
+                        Text("T-14 REQS", color = CyberTextDim, fontSize = 8.sp, )
+                        Text("DIAGNOSTICS PULSE RATIO: ACTIVE", color = CyberTerminalGreen, fontSize = 8.sp, )
+                        Text("LIVE", color = CyberNeonRed, fontSize = 8.sp,  fontWeight = FontWeight.Bold)
                     }
                 }
             }
@@ -2175,7 +2113,7 @@ fun AnalysisTab(viewModel: MainViewModel) {
                     Text(
                         "ACOUSTIC & HAPTI-VIBE CALIBRATING",
                         color = CyberTextHigh,
-                        fontFamily = FontFamily.Monospace,
+                        
                         fontSize = 11.sp,
                         fontWeight = FontWeight.Bold
                     )
@@ -2194,8 +2132,8 @@ fun AnalysisTab(viewModel: MainViewModel) {
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Column {
-                            Text("PROCEDURAL SYNTH FEEDBACK", color = CyberTextHigh, fontSize = 11.sp, fontFamily = FontFamily.Monospace)
-                            Text("Synthesized audio telemetry notifications", color = CyberTextDim, fontSize = 9.sp, fontFamily = FontFamily.Monospace)
+                            Text("PROCEDURAL SYNTH FEEDBACK", color = CyberTextHigh, fontSize = 11.sp, )
+                            Text("Synthesized audio telemetry notifications", color = CyberTextDim, fontSize = 9.sp, )
                         }
                         Switch(
                             checked = soundEnabled,
@@ -2230,8 +2168,8 @@ fun AnalysisTab(viewModel: MainViewModel) {
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Column {
-                            Text("TACTICAL HAPTICS SHIELD", color = CyberTextHigh, fontSize = 11.sp, fontFamily = FontFamily.Monospace)
-                            Text("Physical click feedbacks on UI interactions", color = CyberTextDim, fontSize = 9.sp, fontFamily = FontFamily.Monospace)
+                            Text("TACTICAL HAPTICS SHIELD", color = CyberTextHigh, fontSize = 11.sp, )
+                            Text("Physical click feedbacks on UI interactions", color = CyberTextDim, fontSize = 9.sp, )
                         }
                         Switch(
                             checked = hapticsEnabled,
@@ -2269,14 +2207,14 @@ fun AnalysisTab(viewModel: MainViewModel) {
                             Text(
                                 "CYBERDECK LOCAL DATA MATRIX",
                                 color = CyberTextHigh,
-                                fontFamily = FontFamily.Monospace,
+                                
                                 fontSize = 11.sp,
                                 fontWeight = FontWeight.Bold
                             )
                             Text(
                                 "LINK CUSTOM DOCUMENT NODES SECURELY",
                                 color = CyberTextDim,
-                                fontFamily = FontFamily.Monospace,
+                                
                                 fontSize = 8.sp
                             )
                         }
@@ -2286,11 +2224,11 @@ fun AnalysisTab(viewModel: MainViewModel) {
                                 filePickerLauncher.launch("*/*")
                             },
                             colors = ButtonDefaults.buttonColors(containerColor = CyberNeonRed),
-                            shape = RoundedCornerShape(8.dp)
+                            shape = RoundedCornerShape(24.dp)
                         ) {
                             Icon(Icons.Default.Add, contentDescription = null, modifier = Modifier.size(14.dp))
                             Spacer(modifier = Modifier.width(4.dp))
-                            Text("MOUNT FILE", fontFamily = FontFamily.Monospace, fontSize = 10.sp, fontWeight = FontWeight.Bold)
+                            Text("MOUNT FILE",  fontSize = 10.sp, fontWeight = FontWeight.Bold)
                         }
                     }
 
@@ -2301,7 +2239,7 @@ fun AnalysisTab(viewModel: MainViewModel) {
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .background(CyberBlack)
-                                .border(BorderStroke(1.dp, Color(0x33DC2626)), RoundedCornerShape(8.dp))
+                                .border(BorderStroke(1.dp, Color(0x33DC2626)), RoundedCornerShape(24.dp))
                                 .padding(16.dp),
                             contentAlignment = Alignment.Center
                         ) {
@@ -2311,14 +2249,14 @@ fun AnalysisTab(viewModel: MainViewModel) {
                                 Text(
                                     "NO STORAGE NODES DETECTED",
                                     color = CyberTextDim,
-                                    fontFamily = FontFamily.Monospace,
+                                    
                                     fontSize = 11.sp,
                                     fontWeight = FontWeight.Bold
                                 )
                                 Text(
                                     "Import .txt/.log/.json documents here.",
                                     color = CyberTextDim,
-                                    fontFamily = FontFamily.Monospace,
+                                    
                                     fontSize = 9.sp
                                 )
                             }
@@ -2345,7 +2283,7 @@ fun AnalysisTab(viewModel: MainViewModel) {
                                                     Text(
                                                         doc.name,
                                                         color = CyberTextHigh,
-                                                        fontFamily = FontFamily.Monospace,
+                                                        
                                                         fontSize = 11.sp,
                                                         fontWeight = FontWeight.Bold,
                                                         maxLines = 1,
@@ -2354,7 +2292,7 @@ fun AnalysisTab(viewModel: MainViewModel) {
                                                     Text(
                                                         "${formatBytes(doc.sizeBytes)} // ${doc.charCount} chars",
                                                         color = CyberTextDim,
-                                                        fontFamily = FontFamily.Monospace,
+                                                        
                                                         fontSize = 9.sp
                                                     )
                                                 }
@@ -2377,14 +2315,14 @@ fun AnalysisTab(viewModel: MainViewModel) {
                                         Text(
                                             "LINK NODE ATTACHMENT UPLINK TO ACTIVE CHATS:",
                                             color = CyberTextDim,
-                                            fontFamily = FontFamily.Monospace,
+                                            
                                             fontSize = 8.sp,
                                             fontWeight = FontWeight.Bold
                                         )
                                         Spacer(modifier = Modifier.height(6.dp))
 
                                         if (sessions.isEmpty()) {
-                                            Text("No terminal sessions registered.", color = CyberTextDim, fontSize = 8.sp, fontFamily = FontFamily.Monospace)
+                                            Text("No terminal sessions registered.", color = CyberTextDim, fontSize = 8.sp, )
                                         } else {
                                             androidx.compose.foundation.lazy.LazyRow(
                                                 modifier = Modifier.fillMaxWidth(),
@@ -2401,7 +2339,7 @@ fun AnalysisTab(viewModel: MainViewModel) {
                                                             Text(
                                                                 sess.title,
                                                                 fontSize = 9.sp,
-                                                                fontFamily = FontFamily.Monospace,
+                                                                
                                                                 maxLines = 1,
                                                                 overflow = TextOverflow.Ellipsis
                                                             )

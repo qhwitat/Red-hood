@@ -42,7 +42,7 @@ class AIApiService(private val apiKeyManager: ApiKeyManager) {
         temperature: Float,
         memoryType: String,
         fixedWindowLimit: Int
-    ): Flow<String> = flow {
+    ): Flow<String> = kotlinx.coroutines.flow.channelFlow {
         // Retrieve appropriate API Key
         val apiKey = when (provider.lowercase()) {
             "groq" -> apiKeyManager.getGroqKey()
@@ -53,8 +53,8 @@ class AIApiService(private val apiKeyManager: ApiKeyManager) {
         }
 
         if (apiKey.isEmpty() && provider.lowercase() != "custom") {
-            emit("Error: API Key is missing for provider '$provider'. Please set it in the Connect panel.")
-            return@flow
+            send("Error: API Key is missing for provider '$provider'. Please set it in the Connect panel.")
+            return@channelFlow
         }
 
         // Determine which endpoint and URL to hit
@@ -67,24 +67,20 @@ class AIApiService(private val apiKeyManager: ApiKeyManager) {
         }
 
         if (url.isEmpty()) {
-            emit("Error: Unknown model provider '$provider'")
-            return@flow
+            send("Error: Unknown model provider '$provider'")
+            return@channelFlow
         }
 
         // Apply Memory management constraints to history
         val resolvedHistory = when (memoryType) {
             "fixed_window" -> {
-                // Return only the last N messages
                 if (history.size > fixedWindowLimit) {
                     history.takeLast(fixedWindowLimit)
                 } else {
                     history
                 }
             }
-            "infinite" -> {
-                // Return all messages, but if length exceeds token boundary we inject a summarized briefing
-                history
-            }
+            "infinite" -> history
             else -> history
         }
 
@@ -97,7 +93,6 @@ class AIApiService(private val apiKeyManager: ApiKeyManager) {
 
         val messagesArray = JSONArray()
 
-        // 1. Add System Instructions (Persona)
         if (systemInstruction.isNotEmpty()) {
             val systemMsg = JSONObject()
             systemMsg.put("role", "system")
@@ -105,22 +100,8 @@ class AIApiService(private val apiKeyManager: ApiKeyManager) {
             messagesArray.put(systemMsg)
         }
 
-        // 2. Add Infinite context summary if history is long and we are in Infinite mode
-        if (memoryType == "infinite" && resolvedHistory.size > 8) {
-            val totalTextLength = resolvedHistory.sumOf { it.content.length }
-            if (totalTextLength > 3000) {
-                // Synthesize local summary concept card inject
-                val memoryBriefing = JSONObject()
-                memoryBriefing.put("role", "system")
-                memoryBriefing.put("content", "[Cyber-Memory Summary Injection]: Conversation exceeds standard buffer bounds. Retaining distilled summary of historical interactions: The user is testing various capabilities, inquiring about code logic, creative thoughts, or tutoring lessons. Assist with ultra-low latency.")
-                messagesArray.put(memoryBriefing)
-            }
-        }
-
-        // 3. Append actual chat history
         resolvedHistory.forEach { msg ->
             val msgJson = JSONObject()
-            // Map roles safely
             val finalRole = when (msg.role.lowercase()) {
                 "user" -> "user"
                 "assistant", "ai" -> "assistant"
@@ -138,20 +119,17 @@ class AIApiService(private val apiKeyManager: ApiKeyManager) {
             .url(url)
             .post(requestJson.toString().toRequestBody(JSON_MEDIA_TYPE))
 
-        // Set Headers based on provider
         requestBuilder.addHeader("Content-Type", "application/json")
         when (provider.lowercase()) {
-            "groq" -> {
+            "groq", "openrouter" -> {
                 requestBuilder.addHeader("Authorization", "Bearer $apiKey")
-            }
-            "openrouter" -> {
-                requestBuilder.addHeader("Authorization", "Bearer $apiKey")
-                requestBuilder.addHeader("HTTP-Referer", "https://ai.studio/build")
-                requestBuilder.addHeader("X-Title", "CyberAI Playground")
+                if (provider.lowercase() == "openrouter") {
+                    requestBuilder.addHeader("HTTP-Referer", "https://ai.studio/build")
+                    requestBuilder.addHeader("X-Title", "CyberAI Playground")
+                }
             }
             "gemini" -> {
                 if (apiKey.startsWith("AIzaSy")) {
-                    // Try hitting with standard API Key query param override or Bearer Token
                     requestBuilder.url("$url?key=$apiKey")
                 } else {
                     requestBuilder.addHeader("Authorization", "Bearer $apiKey")
@@ -169,37 +147,51 @@ class AIApiService(private val apiKeyManager: ApiKeyManager) {
         try {
             client.newCall(request).execute().use { response ->
                 if (!response.isSuccessful) {
-                    val errorMsg = response.body?.string() ?: "Unknown error"
-                    Log.e(TAG, "API call failed with response code ${response.code}: $errorMsg")
-                    emit("Error [Code ${response.code}]: $errorMsg")
-                    return@flow
+                    send("Error [Code ${response.code}]: ${response.body?.string() ?: "Unknown error"}")
+                    return@channelFlow
                 }
 
-                val source = response.body?.source() ?: throw IOException("Empty response source body")
+                val source = response.body?.source() ?: throw IOException("Empty response")
                 val reader = BufferedReader(source.inputStream().reader())
                 var line: String?
+
+                var lastEmit = System.currentTimeMillis()
+                val buffer = StringBuilder()
 
                 while (reader.readLine().also { line = it } != null) {
                     val currentLine = line?.trim() ?: break
                     if (currentLine.startsWith("data: ")) {
                         val dataContent = currentLine.substring(6).trim()
                         if (dataContent == "[DONE]") {
+                            if (buffer.isNotEmpty()) {
+                                send(buffer.toString())
+                                buffer.clear()
+                            }
                             break
                         }
                         try {
                             val chunkText = parseChunkJson(dataContent)
                             if (chunkText != null) {
-                                emit(chunkText)
+                                buffer.append(chunkText)
+                                val now = System.currentTimeMillis()
+                                // Batch UI updates to max 30 fps (every ~33ms) to prevent UI lag on fast APIs like Groq
+                                if (now - lastEmit > 33) {
+                                    send(buffer.toString())
+                                    buffer.clear()
+                                    lastEmit = now
+                                }
                             }
-                        } catch (e: Exception) {
-                            Log.e(TAG, "Error parsing chunk line: $currentLine", e)
-                        }
+                        } catch (e: Exception) {}
                     }
+                }
+                
+                // Flush remaining tokens
+                if (buffer.isNotEmpty()) {
+                    send(buffer.toString())
                 }
             }
         } catch (e: Exception) {
-            Log.e(TAG, "Network request threw exception", e)
-            emit("Error: ${e.message ?: "An unexpected connection error occurred."}")
+            send("Error: ${e.message ?: "An unexpected connection error occurred."}")
         }
     }.flowOn(Dispatchers.IO)
 

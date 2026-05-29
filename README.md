@@ -1,21 +1,34 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
-</div>
+# Ren ai 🔴
 
-# Run and deploy your AI Studio app
+**Ren ai** is a high-performance, multi-provider AI assistant Android application built with Kotlin and Jetpack Compose. It features a striking "Deep Red" cyberpunk-inspired user interface, supporting ultra-low latency inference via multiple API backends.
 
-This contains everything you need to run your app locally.
+## Features
 
-View your app in AI Studio: https://ai.studio/apps/7ca990bb-7277-46a3-a83d-eed3f09f3c45
+- **Multi-Provider AI Matrix**: Connect effortlessly to models across Gemini, Groq, OpenRouter, or your own Custom API nodes.
+- **Deep Red Immersive UI**: A bold, edge-to-edge dark theme (`#140505` surface, `#F44336` neon accents) designed for high contrast and developer ergonomics without distractions. 
+- **System Persona Injection**: Granular control over the system prompt context, allowing you to fine-tune AI behavior and directives.
+- **Dynamic Memory Bounding**: Choose between "Fixed Window" memory to save context tokens or "Infinite" memory for long context window streams.
+- **Real-Time Data Streaming**: Rapid streaming responses mapped efficiently to UI components, optimized specifically for fast-inference backends like Groq.
+- **Diagnostics & Telemetry**: Toggleable tactile feedback, synthetic operation pacing, and terminal-style telemetry metrics. 
 
-## Run Locally
+## Technology Stack
 
-**Prerequisites:**  [Android Studio](https://developer.android.com/studio)
+- **Platform**: Android (Min SDK 24, Target SDK 36)
+- **Language**: Kotlin
+- **UI Framework**: Jetpack Compose (Material Design Customization)
+- **Networking**: Ktor / Retrofit & Coroutines Flow for continuous stream processing
+- **Build System**: Gradle Kotlin DSL
+- **CI/CD**: GitHub Actions workflow included for automated APK releases
 
+## Getting Started
 
-1. Open Android Studio
-2. Select **Open** and choose the directory containing this project
-3. Allow Android Studio to fix any incompatibilities as it imports the project.
-4. Create a file named `.env` in the project directory and set `GEMINI_API_KEY` in that file to your Gemini API key (see `.env.example` for an example)
-5. Remove this line from the app's `build.gradle.kts` file: `signingConfig = signingConfigs.getByName("debugConfig")`
-6. Run the app on an emulator or physical device
+1. Clone or download the repository.
+2. Open with Android Studio.
+3. Sync the Gradle files.
+4. Run `gradle assembleDebug` or install onto a connected device/emulator.
+
+> **Note**: To utilize the inference backends, you must provide your own API Keys within the application's Connect panel (Groq API, OpenRouter API etc).
+
+## License
+
+This project is licensed under the MIT License.
