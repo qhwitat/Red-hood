@@ -1,21 +1,44 @@
 name: Android CI
 on: [push, workflow_dispatch]
+
+env:
+  # هذا الأمر يحل مشكلة إجبارية الانتقال لـ Node 24 ويتخطى تحذيرات المنصة
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
+
     - name: set up JDK
       uses: actions/setup-java@v4
       with:
         java-version: '17'
         distribution: 'temurin'
-    - name: Grant execute permission
-      run: chmod +x gradlew
+
+    # هذا الأمر سيبحث عن ملف gradlew في أي مكان داخل المستودع ويمنحه صلاحية التشغيل تلقائياً
+    - name: Find and Grant execute permission for gradlew
+      run: |
+        GRADLEW_PATH=$(find . -name "gradlew" -print -quit)
+        if [ -z "$GRADLEW_PATH" ]; then
+          echo "ERROR: gradlew file not found anywhere in the repository!"
+          exit 1
+        fi
+        chmod +x "$GRADLEW_PATH"
+        echo "GRADLEW_DIR=$(dirname "$GRADLEW_PATH")" >> $GITHUB_ENV
+
+    # بناء التطبيق بناءً على المجلد الصحيح الذي تم العثور فيه على ملف gradlew
     - name: Build with Gradle
-      run: ./gradlew assembleDebug
+      run: |
+        cd ${{ env.GRADLEW_DIR }}
+        ./gradlew assembleDebug
+
+    # رفع ملف الـ APK النهائي للتحميل
     - name: Upload APK
       uses: actions/upload-artifact@v4
       with:
         name: app-debug
-        path: app/build/outputs/apk/debug/app-debug.apk
+        path: |
+          **/build/outputs/apk/debug/*-debug.apk
+          **/build/outputs/apk/debug/app-debug.apk
