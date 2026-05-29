@@ -12,6 +12,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -116,7 +118,7 @@ fun DashboardScreen(
                             )
                             Spacer(modifier = Modifier.width(8.dp))
                             Text(
-                                "Ren ai",
+                                Trans.ts("Ren ai"),
                                 color = CyberTextHigh,
                                 fontFamily = FontFamily.SansSerif,
                                 fontWeight = FontWeight.Bold,
@@ -339,7 +341,7 @@ fun DrawerConsoleContent(
             modifier = Modifier.fillMaxWidth()
         ) {
             Text(
-                "REN AI WORKSPACES",
+                Trans.ts("REN AI WORKSPACES"),
                 color = CyberNeonRed,
                 fontFamily = FontFamily.SansSerif,
                 fontWeight = FontWeight.Bold,
@@ -371,7 +373,7 @@ fun DrawerConsoleContent(
             Icon(Icons.Default.Add, contentDescription = null, tint = CyberTextHigh)
             Spacer(modifier = Modifier.width(6.dp))
             Text(
-                "INITIALIZE NEW CORE",
+                Trans.ts("INITIALIZE NEW CORE"),
                 color = CyberTextHigh,
                 
                 fontWeight = FontWeight.Bold,
@@ -468,6 +470,26 @@ fun DrawerConsoleContent(
             }
         }
 
+        var showSettingsDialog by remember { mutableStateOf(false) }
+        
+        // Settings / Preferences Button
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable { showSettingsDialog = true }
+                .padding(vertical = 12.dp, horizontal = 4.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Icon(Icons.Default.Settings, contentDescription = "Settings", tint = CyberTextDim, modifier = Modifier.size(20.dp))
+            Spacer(modifier = Modifier.width(8.dp))
+            Text(
+                Trans.ts("GLOBAL APP PREFERENCES"),
+                color = CyberTextDim,
+                fontWeight = FontWeight.Bold,
+                fontSize = 11.sp
+            )
+        }
+
         // Seeding / Information Status Indicator
         Surface(
             color = CyberDarkCard,
@@ -475,7 +497,7 @@ fun DrawerConsoleContent(
             shape = RoundedCornerShape(24.dp),
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 16.dp)
+                .padding(top = 8.dp)
         ) {
             Column(modifier = Modifier.padding(8.dp)) {
                 Text(
@@ -492,6 +514,9 @@ fun DrawerConsoleContent(
                     fontSize = 9.sp
                 )
             }
+        }
+        if (showSettingsDialog) {
+            SettingsDialog(onDismiss = { showSettingsDialog = false })
         }
     }
 
@@ -534,7 +559,7 @@ fun CreateCoreDialog(
         onDismissRequest = onDismiss,
         title = {
             Text(
-                "MOUNT AI CORE MODULE",
+                Trans.ts("MOUNT AI CORE MODULE"),
                 color = CyberNeonRed,
                 
                 fontWeight = FontWeight.Bold,
@@ -565,7 +590,7 @@ fun CreateCoreDialog(
                     OutlinedTextField(
                         value = title,
                         onValueChange = { viewModel.configTitle.value = it },
-                        label = { Text("Core Channel Alias", ) },
+                        label = { Text(Trans.ts("Core Channel Alias"), ) },
                         colors = OutlinedTextFieldDefaults.colors(
                             focusedBorderColor = CyberNeonRed,
                             unfocusedBorderColor = CyberDarkCrimson,
@@ -589,7 +614,7 @@ fun CreateCoreDialog(
                             value = provider.uppercase(),
                             onValueChange = {},
                             readOnly = true,
-                            label = { Text("Provider Node", ) },
+                            label = { Text(Trans.ts("Provider Node"), ) },
                             colors = OutlinedTextFieldDefaults.colors(
                                 focusedBorderColor = CyberNeonRed,
                                 unfocusedBorderColor = CyberDarkCrimson,
@@ -630,7 +655,7 @@ fun CreateCoreDialog(
                         OutlinedTextField(
                             value = model,
                             onValueChange = { viewModel.configModel.value = it },
-                            label = { Text("Active Custom Model", ) },
+                            label = { Text(Trans.ts("Active Custom Model"), ) },
                             colors = OutlinedTextFieldDefaults.colors(
                                 focusedBorderColor = CyberNeonRed,
                                 unfocusedBorderColor = CyberDarkCrimson,
@@ -657,7 +682,7 @@ fun CreateCoreDialog(
                                 value = model,
                                 onValueChange = {},
                                 readOnly = true,
-                                label = { Text("Active AI Model", ) },
+                                label = { Text(Trans.ts("Active AI Model"), ) },
                                 colors = OutlinedTextFieldDefaults.colors(
                                     focusedBorderColor = CyberNeonRed,
                                     unfocusedBorderColor = CyberDarkCrimson,
@@ -701,7 +726,7 @@ fun CreateCoreDialog(
                             value = activePersonaName,
                             onValueChange = {},
                             readOnly = true,
-                            label = { Text("System Persona Prompt", ) },
+                            label = { Text(Trans.ts("System Persona Prompt"), ) },
                             colors = OutlinedTextFieldDefaults.colors(
                                 focusedBorderColor = CyberNeonRed,
                                 unfocusedBorderColor = CyberDarkCrimson,
@@ -948,12 +973,11 @@ fun PlaygroundTab(
     var userPromptText by remember { mutableStateOf("") }
 
     // Scroll automatically whenever messages list changes or streaming output updates
-    LaunchedEffect(messages.size, liveStreamContent) {
+    LaunchedEffect(messages.size, liveStreamContent, isGenerating) {
         if (messages.isNotEmpty() || liveStreamContent.isNotEmpty()) {
-            val lastIndex = if (liveStreamContent.isNotEmpty()) messages.size else messages.size - 1
-            if (lastIndex >= 0) {
-                // Using scrollToItem instead of animateScrollToItem prevents heavy UI jank when new tokens rapidly emit
-                scrollState.scrollToItem(lastIndex)
+            val totalItems = messages.size + if (isGenerating && liveStreamContent.isNotEmpty()) 1 else 0
+            if (totalItems > 0) {
+                scrollState.scrollToItem(totalItems - 1)
             }
         }
     }
@@ -982,7 +1006,7 @@ fun PlaygroundTab(
                     )
                     Spacer(modifier = Modifier.height(16.dp))
                     Text(
-                        "CORE TERMINAL OFFLINE",
+                        Trans.ts("CORE TERMINAL OFFLINE"),
                         color = CyberNeonRed,
                         
                         fontWeight = FontWeight.Bold,
@@ -1146,7 +1170,7 @@ fun PlaygroundTab(
                         ) {
                             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                                 Text(
-                                    "LINK CONSOLE ESTABLISHED",
+                                    Trans.ts("LINK CONSOLE ESTABLISHED"),
                                     color = CyberTerminalGreen,
                                     
                                     fontSize = 11.sp,
@@ -1154,7 +1178,7 @@ fun PlaygroundTab(
                                 )
                                 Spacer(modifier = Modifier.height(4.dp))
                                 Text(
-                                    "Waiting for telemetry string packet...",
+                                    Trans.ts("Waiting for telemetry string packet..."),
                                     color = CyberTextDim,
                                     
                                     fontSize = 9.sp
@@ -1186,7 +1210,7 @@ fun PlaygroundTab(
                         .padding(vertical = 4.dp)
                 )
                 Text(
-                    ">> INCOMING AI TELEMETRY STRING BYTES...",
+                    Trans.ts(">> INCOMING AI TELEMETRY STRING BYTES..."),
                     color = CyberTerminalGreen,
                     
                     fontSize = 8.sp,
@@ -2322,7 +2346,7 @@ fun AnalysisTab(viewModel: MainViewModel) {
                                         Spacer(modifier = Modifier.height(6.dp))
 
                                         if (sessions.isEmpty()) {
-                                            Text("No terminal sessions registered.", color = CyberTextDim, fontSize = 8.sp, )
+                                            Text(Trans.ts("No terminal sessions registered."), color = CyberTextDim, fontSize = 8.sp, )
                                         } else {
                                             androidx.compose.foundation.lazy.LazyRow(
                                                 modifier = Modifier.fillMaxWidth(),
@@ -2364,3 +2388,81 @@ fun AnalysisTab(viewModel: MainViewModel) {
     }
 }
 
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun SettingsDialog(onDismiss: () -> Unit) {
+    val isArabic by AppConfig.isArabic.collectAsState()
+    val errorLogs by AppConfig.errorLogs.collectAsState()
+
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        containerColor = CyberDarkCard,
+        titleContentColor = CyberTextHigh,
+        textContentColor = CyberTextHigh,
+        title = {
+            Text(Trans.ts("GLOBAL APP PREFERENCES"), fontWeight = FontWeight.Bold)
+        },
+        text = {
+            Column(
+                modifier = Modifier
+                    .fillMaxHeight(0.8f)
+                    .verticalScroll(rememberScrollState()),
+                verticalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                // Language Toggle
+                Column {
+                    Text(Trans.ts("Language"), color = CyberNeonRed, fontSize = 12.sp, fontWeight = FontWeight.Bold)
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Text("English", color = if (!isArabic) CyberTextHigh else CyberTextDim)
+                        Switch(
+                            checked = isArabic,
+                            onCheckedChange = { AppConfig.isArabic.value = it },
+                            modifier = Modifier.padding(horizontal = 8.dp),
+                            colors = SwitchDefaults.colors(
+                                checkedThumbColor = CyberBlack,
+                                checkedTrackColor = CyberNeonRed,
+                                uncheckedThumbColor = CyberTextDim,
+                                uncheckedTrackColor = CyberDarkCard
+                            )
+                        )
+                        Text("العربية", color = if (isArabic) CyberTextHigh else CyberTextDim)
+                    }
+                    Text(Trans.ts("System Language Overlay"), fontSize = 10.sp, color = CyberTextDim)
+                }
+
+                HorizontalDivider(color = CyberDarkCrimson)
+
+                // Error Logs
+                Column {
+                    Text(Trans.ts("Error Logs"), color = CyberNeonRed, fontSize = 12.sp, fontWeight = FontWeight.Bold)
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Text(Trans.ts("API Network Exceptions"), fontSize = 10.sp, color = CyberTextDim)
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    if (errorLogs.isEmpty()) {
+                        Text("No errors tracked.", color = CyberTextDim, fontSize = 11.sp, fontStyle = androidx.compose.ui.text.font.FontStyle.Italic)
+                    } else {
+                        errorLogs.forEach { log ->
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(vertical = 4.dp)
+                                    .background(CyberDarkSurface, RoundedCornerShape(8.dp))
+                                    .padding(8.dp)
+                            ) {
+                                Text(log, color = CyberTextHigh, fontSize = 10.sp)
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        confirmButton = {
+            TextButton(onClick = onDismiss) {
+                Text(Trans.ts("CANCEL"), color = CyberTextHigh)
+            }
+        }
+    )
+}

@@ -17,6 +17,8 @@ import java.io.BufferedReader
 import java.io.IOException
 import java.util.concurrent.TimeUnit
 
+import com.example.ui.AppConfig
+
 class AIApiService(private val apiKeyManager: ApiKeyManager) {
 
     private val client = OkHttpClient.Builder()
@@ -125,7 +127,7 @@ class AIApiService(private val apiKeyManager: ApiKeyManager) {
                 requestBuilder.addHeader("Authorization", "Bearer $apiKey")
                 if (provider.lowercase() == "openrouter") {
                     requestBuilder.addHeader("HTTP-Referer", "https://ai.studio/build")
-                    requestBuilder.addHeader("X-Title", "CyberAI Playground")
+                    requestBuilder.addHeader("X-Title", "Ren ai")
                 }
             }
             "gemini" -> {
@@ -147,7 +149,9 @@ class AIApiService(private val apiKeyManager: ApiKeyManager) {
         try {
             client.newCall(request).execute().use { response ->
                 if (!response.isSuccessful) {
-                    send("Error [Code ${response.code}]: ${response.body?.string() ?: "Unknown error"}")
+                    val errMsg = "Error [Code ${response.code}]: ${response.body?.string() ?: "Unknown error"}"
+                    AppConfig.logError(errMsg)
+                    send(errMsg)
                     return@channelFlow
                 }
 
@@ -191,7 +195,9 @@ class AIApiService(private val apiKeyManager: ApiKeyManager) {
                 }
             }
         } catch (e: Exception) {
-            send("Error: ${e.message ?: "An unexpected connection error occurred."}")
+            val errMsg = "Error: ${e.message ?: "An unexpected connection error occurred."}"
+            AppConfig.logError(errMsg)
+            send(errMsg)
         }
     }.flowOn(Dispatchers.IO)
 
