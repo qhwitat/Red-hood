@@ -15,6 +15,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        // Triggering rebuild to fix I/O error on emulator
         setContent {
             CyberTheme {
                 val viewModel: MainViewModel = viewModel()
