@@ -10,26 +10,24 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
+    # رفع نسخة الـ Java إلى 21 للتوافق مع مكتبة bcprov الحديثة
     - name: set up JDK
       uses: actions/setup-java@v4
       with:
-        java-version: '17'
+        java-version: '21'
         distribution: 'temurin'
 
-    # خطوة هامة جداً: توليد ملف gradlew المفقود في مستودعك لتجنب الخطأ السابق
+    # توليد نسخة Gradle 8.4 المستقرة والتي تحل مشكلة الـ Jar المخرب
     - name: Generate missing Gradle Wrapper
       run: |
-        gradle wrapper --gradle-version 8.2
+        gradle wrapper --gradle-version 8.4
 
-    # منح صلاحية التنفيذ للملف الذي تم توليده
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
 
-    # بناء التطبيق واستخراج الـ APK
     - name: Build with Gradle
       run: ./gradlew assembleDebug
 
-    # رفع الـ APK لتبويب التحميل
     - name: Upload APK
       uses: actions/upload-artifact@v4
       with:
