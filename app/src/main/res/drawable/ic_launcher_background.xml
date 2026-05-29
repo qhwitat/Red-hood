@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    
+    <!-- Base Cyberpunk Pitch-Black Background -->
+    <path
+        android:fillColor="#000000"
+        android:pathData="M0,0h108v108h-108z" />
+
+    <!-- Subtle Deep Crimson Circular Grid Radar Lines -->
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#2E0005"
+        android:strokeWidth="1"
+        android:pathData="M54,54m-12,0a12,12 0,1 1,24 0a12,12 0,1 1,-24 0" />
+
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#3E000B"
+        android:strokeWidth="1"
+        android:pathData="M54,54m-28,0a28,28 0,1 1,56 0a28,28 0,1 1,-56 0" />
+
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#1E0003"
+        android:strokeWidth="0.8"
+        android:pathData="M54,54m-44,0a44,44 0,1 1,88 0a44,44 0,1 1,-88 0" />
+
+    <!-- Crosshair axes -->
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#2E0005"
+        android:strokeWidth="0.8"
+        android:pathData="M54,10L54,98" />
+
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#2E0005"
+        android:strokeWidth="0.8"
+        android:pathData="M10,54L98,54" />
+
+</vector>
